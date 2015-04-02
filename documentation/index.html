@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>xrmJS  , Dynamics CRM Framework</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootswatch/3.1.1/cyborg/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200">
+    <style>
+        /* Highlight.js Theme Monokai Sublime */
+        pre {
+            color: #fff;
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hljs {
+            display: block;
+            padding: .5em;
+            background: #23241f;
+        }
+
+        .hljs, .hljs-tag, .css .hljs-rules, .css .hljs-value, .css .hljs-function .hljs-preprocessor, .hljs-pragma {
+            color: #f8f8f2;
+        }
+
+        .hljs-strongemphasis, .hljs-strong, .hljs-emphasis {
+            color: #a8a8a2;
+        }
+
+        .hljs-bullet, .hljs-blockquote, .hljs-horizontal_rule, .hljs-number, .hljs-regexp, .alias .hljs-keyword, .hljs-literal, .hljs-hexcolor {
+            color: #ae81ff;
+        }
+
+        .hljs-tag .hljs-value, .hljs-code, .hljs-title, .css .hljs-class, .hljs-class .hljs-title:last-child {
+            color: #a6e22e;
+        }
+
+        .hljs-link_url {
+            font-size: 80%;
+        }
+
+        .hljs-strong, .hljs-strongemphasis {
+            font-weight: bold;
+        }
+
+        .hljs-emphasis, .hljs-strongemphasis, .hljs-class .hljs-title:last-child {
+            font-style: italic;
+        }
+
+        .hljs-keyword, .hljs-function, .hljs-change, .hljs-winutils, .hljs-flow, .lisp .hljs-title, .clojure .hljs-built_in, .nginx .hljs-title, .tex .hljs-special, .hljs-header, .hljs-attribute, .hljs-symbol, .hljs-symbol .hljs-string, .hljs-tag .hljs-title, .hljs-value, .alias .hljs-keyword:first-child, .css .hljs-tag, .css .unit, .css .hljs-important {
+            color: #f92672;
+        }
+
+            .hljs-function .hljs-keyword, .hljs-class .hljs-keyword:first-child, .hljs-constant, .css .hljs-attribute {
+                color: #66d9ef;
+            }
+
+        .hljs-variable, .hljs-params, .hljs-class .hljs-title {
+            color: #f8f8f2;
+        }
+
+        .hljs-string, .css .hljs-id, .hljs-subst, .haskell .hljs-type, .ruby .hljs-class .hljs-parent, .hljs-built_in, .django .hljs-template_tag, .django .hljs-variable, .smalltalk .hljs-class, .django .hljs-filter .hljs-argument, .smalltalk .hljs-localvars, .smalltalk .hljs-array, .hljs-attr_selector, .hljs-pseudo, .hljs-addition, .hljs-stream, .hljs-envvar, .apache .hljs-tag, .apache .hljs-cbracket, .tex .hljs-command, .hljs-prompt, .hljs-link_label, .hljs-link_url {
+            color: #e6db74;
+        }
+
+        .hljs-comment, .hljs-javadoc, .java .hljs-annotation, .python .hljs-decorator, .hljs-template_comment, .hljs-pi, .hljs-doctype, .hljs-deletion, .hljs-shebang, .apache .hljs-sqbracket, .tex .hljs-formula {
+            color: #75715e;
+        }
+
+        .coffeescript .javascript, .javascript .xml, .tex .hljs-formula, .xml .javascript, .xml .vbscript, .xml .css, .xml .hljs-cdata, .xml .php, .php .xml {
+            opacity: .5;
+        }
+    </style>
+    <style>
+        body,
+        h4,
+        h5 {
+            font-family: 'Roboto' sans-serif !important;
+        }
+
+        h1,
+        h2,
+        h3,
+        .aglio {
+            font-family: 'Raleway' sans-serif !important;
+        }
+
+            h1 a,
+            h2 a,
+            h3 a,
+            h4 a,
+            h5 a {
+                display: none;
+            }
+
+            h1:hover a,
+            h2:hover a,
+            h3:hover a,
+            h4:hover a,
+            h5:hover a {
+                display: inline;
+            }
+
+        code {
+            color: #222;
+            background-color: #aaa;
+            font-family: 'Inconsolata' monospace !important;
+        }
+
+        a[data-target] {
+            cursor: pointer;
+        }
+
+        h4 {
+            font-size: 100%;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .back-to-top {
+            position: fixed;
+            z-index: 1;
+            bottom: 0px;
+            right: 24px;
+            padding: 4px 8px;
+            color: #aaa;
+            background-color: #1a1a1a;
+            text-decoration: none !important;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            border-left: 1px solid rgba(0,0,0,0.1);
+            border-right: 1px solid rgba(0,0,0,0.1);
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+
+        .panel {
+            overflow: hidden;
+        }
+
+        .panel-heading code {
+            margin-left: 3px;
+            color: #fff;
+            background-color: rgba(0,0,0,0.7);
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .panel-heading h3 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        a.list-group-item:hover {
+            background-color: #f8f8f8;
+            border-left: 2px solid #555;
+            padding-left: 15px;
+        }
+
+        .indent {
+            display: block;
+            text-indent: 16px;
+        }
+
+        .list-group-item {
+            padding-left: 16px;
+        }
+
+            .list-group-item .toggle .open {
+                display: block;
+            }
+
+            .list-group-item .toggle .closed {
+                display: none;
+            }
+
+            .list-group-item.collapsed .toggle .open {
+                display: none;
+            }
+
+            .list-group-item.collapsed .toggle .closed {
+                display: block;
+            }
+
+        a.list-group-item:hover {
+            background-color: #464646;
+            border-left-color: #888;
+        }
+
+        a.list-group-item {
+            font-size: 13px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+            a.list-group-item.heading {
+                font-size: 15px;
+                background-color: #3c3c3c;
+            }
+
+                a.list-group-item.heading:hover {
+                    background-color: #464646;
+                }
+
+        .list-group-item.collapse {
+            display: none;
+        }
+
+            .list-group-item.collapse.in {
+                display: block;
+            }
+
+        .list-group-item a span.closed {
+            display: none;
+        }
+
+        .list-group-item a span.open {
+            display: block;
+        }
+
+        .list-group-item a.collapsed span.closed {
+            display: block;
+        }
+
+        .list-group-item a.collapsed span.open {
+            display: none;
+        }
+
+        #nav {
+            width: inherit;
+            margin-top: 38px;
+            max-width: 255px;
+            top: 0;
+            bottom: 0;
+            padding-right: 12px;
+            padding-bottom: 12px;
+            overflow-y: auto;
+        }
+
+        @media (max-width: 1199px) {
+            #nav {
+                max-width: 212px;
+            }
+        }
+
+        .selectorHeader {
+            padding-top: 30px;
+        }
+
+        .lowercase {
+            text-transform: none;
+        }
+    </style>
+</head>
+<body>
+    <a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container">
+        <div class="row">
+            <div class="col-md-3" style="position: fixed;">
+                <br />
+                <br />
+                <br />
+                <nav id="nav" class="hidden-sm hidden-xs affix nav" style="position: relative">
+
+					<img src="../images/github.png"/ style="margin-left:90px;margin-bottom:10px;max-width:60px">
+					
+                    <div class="list-group" style="margin-top: 0px!important; padding-top: 0px!important">
+                        <a data-toggle="" data-target="#notes-menu" href="#notes" class="list-group-item heading collapsed" style="background-color: #9933cc!important; color: white;">Download Comperessed 1.0.0</a>
+                        <a data-toggle="" data-target="#notes-menu" href="#notes" class="list-group-item heading collapsed" style="background-color: #bb1212!important; color: white; font-size: 12px">Download UnComperessed 1.0.0<br />
+                            <i style="margin-top: -3px; font-size: 11px; color: #ed7b7b; float: right; font-weight: bold">For Developer</i></a>
+                        <a data-toggle="" data-target="#notes-menu" href="#notes" class="list-group-item heading collapsed" style="background-color: #1959cc!important; color: white; font-size: 12px">Download Intellisense File 1.0.0<br />
+                            <i style="margin-top: -3px; font-size: 11px; color: #ed7b7b; float: right; font-weight: bold">For Visual Studio</i></a>
+                    </div>
+
+                    <div class="list-group">
+                        <a data-toggle="" data-target="#notes-menu" href="#notes" class="list-group-item heading collapsed">Selectors</a>
+                        <div id="notes-menu">
+                            <a href="#field" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">Field</a>
+                            <a href="#lookup" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">Lookup</a>
+                            <a href="#optionset" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">OptionSet</a>
+                            <a href="#iframe" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">Iframe</a>
+                            <a href="#section" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">Section</a>
+                            <a href="#tab" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">Tab</a>
+                        </div>
+                    </div>
+
+                    <div class="list-group">
+                        <a data-toggle="" data-target="#users-menu" href="#common-methods" class="list-group-item heading collapsed">Common Methods</a>
+                        <div id="users-menu">
+                            <a href="#common-clear" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">clear()</a>
+                            <a href="#common-hide" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">hide()</a>
+                            <a href="#common-show" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">show()</a>
+                            <a href="#common-disabled" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">disabled()</a>
+                            <a href="#common-enabled" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">enabled()</a>
+                            <a href="#common-isEnable" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">isEnable()</a>
+                            <a href="#common-required" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">required()</a>
+                            <a href="#common-label" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">label()</a>
+                            <a href="#common-val" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">val()</a>
+                        </div>
+                    </div>
+
+                 
+
+                    <div class="list-group">
+                        <a data-toggle="" data-target="#users-menu" href="#optionset-methods" class="list-group-item heading collapsed">Custom Option Set Methods</a>
+                        <div id="Div2">
+                            <a href="#optionset-labels" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">labels()</a>
+                            <a href="#optionset-values" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">values()</a>
+                            <a href="#optionset-selected" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">selected()</a>
+                            <a href="#optionset-options" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">options()</a>
+                            <a href="#optionset-addOption" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">addOption()</a>
+                            <a href="#optionset-removeOption" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">removeOption()</a>
+                            <a href="#optionset-getOption" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">getOption()</a>
+                        </div>
+                    </div>
+
+                    <div class="list-group">
+                        <a data-toggle="" data-target="#users-menu" href="#iframe-methods" class="list-group-item heading collapsed">Custom Iframe Methods</a>
+                        <div id="Div3">
+                            <a href="#iframe-clear" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">clear()</a>
+                            <a href="#iframe-url" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">url()</a>
+                        </div>
+                    </div>
+
+                
+
+                    <div class="list-group">
+                        <a data-toggle="" data-target="#users-menu" href="#tab-methods" class="list-group-item heading collapsed">Tab Methods</a>
+                        <div id="Div5">
+                            <a href="#tab-expand" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">expand()</a>
+                            <a href="#tab-collapse" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">collapse()</a>
+                            <a href="#tab-sections" style="border-top-left-radius: 0; border-top-right-radius: 0" class="list-group-item">sections()</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-md-8" style="position: absolute; right: 7%">
+                <div>
+                    <header>
+                        <div class="page-header">
+                            <a href="#" style="text-decoration: none;">
+                                <h1 id="top" style="color: #2a9fd6; text-shadow: 2px 2px 10px #aaa">xrmJS Framework for Dynamics CRM</h1>
+                            </a>
+                        </div>
+                    </header>
+                    <div class="description">
+                        <p style="float: right"><a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> <strong>formatted</strong> description.</p>
+                        <h2 id="subtitle">About</h2>
+                        <p>
+                            This library was created to simplify the  JavaScript customizations on Microsoft Dynamics CRM forms.
+                        <br />
+                            <br />
+                            The methods and selectors  are very similar to jQuery and use  fully supported methods to achieve their purposes .The selector vary according to the  control type(standart,lookup ,optionset,section,iframe,tab).xrmJS selector is  "_".
+                           <br />
+                            <br />
+                            This library also includes an intellisense  file to provide intellisense support on Visual Studio .
+                        </p>
+                        <!--<blockquote>
+                            <p>“A quote from another time and place”</p>
+                        </blockquote>-->
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                </div>
+
+                <div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 id="selectors">Selectors&nbsp;<a href="#selectors"><i class="fa fa-link"></i></a></h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>
+                                All of the xrmJS selectors works in the same logic.The selector consists of two parts.
+                                <br />
+                                First control type  , second control name  . Like this  ;
+                                <pre>_("<span class="hljs-number">controlType</span>:<span class="hljs-value">controlName</span>")</pre>
+                            </p>
+
+                            <h4 class="selectorHeader" id="field">Field&nbsp;<a href="#notes-note-list"><i class="fa fa-link"></i></a></h4>
+                            <p>
+                                Field selectors are <strong>"field"</strong> and <strong>"f"</strong>
+                                You can achieve the field helpers with this selectors.
+                            </p>
+
+                            <ul>
+                                <li>1.Long syntax
+                                   <pre>_("<span class="hljs-number">field</span>:<span class="hljs-value">new_fieldname</span>")</pre>
+                                </li>
+                                <li>2.Short syntax
+                                   <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_fieldname</span>")</pre>
+                                </li>
+                            </ul>
+
+                            <h4 class="selectorHeader" id="lookup">Lookup&nbsp;<a href="#notes-note"><i class="fa fa-link"></i></a></h4>
+                            <p>
+                                Lookup selectors are <strong>"lookup"</strong> and <strong>"l"</strong>
+                                You can achieve the lookup helpers with this selectors.
+                            </p>
+                            <ul>
+                                <li>1.Long syntax
+                                   <pre>_("<span class="hljs-number">lookup</span>:<span class="hljs-value">new_lookupname</span>")</pre>
+                                </li>
+                                <li>2.Short syntax
+                                   <pre>_("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookupname</span>")</pre>
+                                </li>
+                            </ul>
+
+                            <h4 class="selectorHeader" id="optionset">Option Set&nbsp;<a href="#notes-note"><i class="fa fa-link"></i></a></h4>
+                            <p>
+                                Option set selectors are <strong>"optionset"</strong> and <strong>"o"</strong>
+                                You can achieve the option set helpers with this selectors.
+                            </p>
+                            <ul>
+                                <li>1.Long syntax
+                                   <pre>_("<span class="hljs-number">optionset</span>:<span class="hljs-value">new_optionsetname</span>")</pre>
+                                </li>
+                                <li>2.Short syntax
+                                   <pre>_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionsetname</span>")</pre>
+                                </li>
+                            </ul>
+
+                            <h4 class="selectorHeader" id="iframe">Iframe&nbsp;<a href="#notes-note"><i class="fa fa-link"></i></a></h4>
+                            <p>
+                                Iframe selectors are <strong>"iframe"</strong> and <strong>"i"</strong>
+                                You can achieve the iframe helpers with this selectors.
+                            </p>
+
+                            <ul>
+                                <li>1.Long syntax
+                                   <pre>_("<span class="hljs-number">iframe</span>:<span class="hljs-value">IFRAME_name</span>")</pre>
+                                </li>
+                                <li>2.Short syntax
+                                   <pre>_("<span class="hljs-number">i</span>:<span class="hljs-value">IFRAME_name</span>")</pre>
+                                </li>
+                            </ul>
+
+                            <h4 class="selectorHeader" id="section">Section&nbsp;<a href="#notes-note"><i class="fa fa-link"></i></a></h4>
+                            <p>
+                                Section selectors are <strong>"section"</strong> and <strong>"s"</strong>
+                                You can achieve the section helpers with this selectors.
+                            </p>
+                            <ul>
+                                <li>1.Long syntax
+                                   <pre>_("<span class="hljs-number">section</span>:<span class="hljs-value">sectionname</span>")</pre>
+                                </li>
+                                <li>2.Short syntax
+                                   <pre>_("<span class="hljs-number">s</span>:<span class="hljs-value">sectionname</span>")</pre>
+                                </li>
+                            </ul>
+
+                            <h4 class="selectorHeader" id="tab">Tab&nbsp;<a href="#notes-note"><i class="fa fa-link"></i></a></h4>
+                            <p>There is two key for select lookup control."lookup" and "l"</p>
+
+                            <ul>
+                                <li>1.Long syntax
+                                   <pre>_("<span class="hljs-number">lookup</span>:<span class="hljs-value">new_lookupname</span>")</pre>
+                                </li>
+                                <li>2.Short syntax
+                                   <pre>_("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookupname</span>")</pre>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 id="common-methods">Common Methods&nbsp;<a href="#common-methods"><i class="fa fa-link"></i></a></h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>This library includes helper for Single Line of Text ,MultiLine , DateTime  s</p>
+
+                            <br />
+                            <br />
+
+                            <h4 id="common-clear" class="lowercase">clear()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Clear the control value.</p>
+                            <section id="users-user-list-get" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase">clear the field value.</span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>clear() example:</p>
+                                    <pre>_("<span class="hljs-number">field</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">clear()</span>;<br />_("<span class="hljs-number">lookup</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">clear()</span>;<br />_("<span class="hljs-number">optionset</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">clear()</span>;</pre>
+
+                                    <p>or</p>
+
+                                    <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">clear()</span>;<br />_("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">clear()</span>;<br />_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">clear()</span>;</pre>
+                                </div>
+                            </section>
+
+                            <br />
+                            <br />
+                            <h4 id="common-hide" class="lowercase">hide()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Hide the control from MS CRM form.</p>
+                            <section id="Section1" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase">hide control.</span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Hide the control example:</p>
+                                    <pre>_("<span class="hljs-number">field</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">hide()</span>;<br />_("<span class="hljs-number">lookup</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">hide()</span>;<br />_("<span class="hljs-number">optionset</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">hide()</span>;<br />_("<span class="hljs-number">section</span>:<span class="hljs-value">section_name</span>").<span class="hljs-string">hide()</span>;<br />_("<span class="hljs-number">iframe</span>:<span class="hljs-value">IFRAME_name</span>").<span class="hljs-string">hide()</span>;<br />_("<span class="hljs-number">tab</span>:<span class="hljs-value">tab_name</span>").<span class="hljs-string">hide()</span>;</pre>
+
+                                    <p>or</p>
+                                    <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">hide()</span>;<br />_("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">hide()</span>;<br />_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">hide()</span>;<br />_("<span class="hljs-number">s</span>:<span class="hljs-value">section_name</span>").<span class="hljs-string">hide()</span>;<br />_("<span class="hljs-number">i</span>:<span class="hljs-value">IFRAME_name</span>").<span class="hljs-string">hide()</span>;<br />_("<span class="hljs-number">t</span>:<span class="hljs-value">tab_name</span>").<span class="hljs-string">hide()</span>;</pre>
+                                </div>
+                            </section>
+
+                            <br />
+                            <br />
+                            <h4 id="common-show" class="lowercase">show()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Show the field on MS CRM form.</p>
+                            <section id="Section2" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase">show control.</span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>show() example:</p>
+                                   <pre>_("<span class="hljs-number">field</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">show()</span>;<br />_("<span class="hljs-number">lookup</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">show()</span>;<br />_("<span class="hljs-number">optionset</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">show()</span>;<br />_("<span class="hljs-number">section</span>:<span class="hljs-value">section_name</span>").<span class="hljs-string">show()</span>;<br />_("<span class="hljs-number">iframe</span>:<span class="hljs-value">IFRAME_name</span>").<span class="hljs-string">show()</span>;<br />_("<span class="hljs-number">tab</span>:<span class="hljs-value">tab_name</span>").<span class="hljs-string">show()</span>;</pre>
+
+                                    <p>or</p>
+                                    <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">show()</span>;<br />_("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">show()</span>;<br />_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">show()</span>;<br />_("<span class="hljs-number">s</span>:<span class="hljs-value">section_name</span>").<span class="hljs-string">show()</span>;<br />_("<span class="hljs-number">i</span>:<span class="hljs-value">IFRAME_name</span>").<span class="hljs-string">show()</span>;<br />_("<span class="hljs-number">t</span>:<span class="hljs-value">tab_name</span>").<span class="hljs-string">show()</span>;</pre>
+                                </div>
+                            </section>
+
+                            <br />
+                            <br />
+                            <h4 id="common-disabled" class="lowercase">disabled()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Disabled the control from MS CRM form.</p>
+                            <section id="Section3" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase">disabled control.</span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>disable()  example:</p>
+                                    <pre>_("<span class="hljs-number">field</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">disabled()</span>;<br />_("<span class="hljs-number">lookup</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">disabled()</span>;<br />_("<span class="hljs-number">optionset</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">disabled()</span>;</pre>
+
+                                    <p>or</p>
+
+                                    <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">disabled()</span>;<br />_("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">disabled()</span>;<br />_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">disabled()</span>;</pre>
+                                </div>
+                            </section>
+
+                            <br />
+                            <br />
+                            <h4 id="common-enabled" class="lowercase">enabled()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Enabled the control from MS CRM form.</p>
+                            <section id="Section4" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase">enabled control.</span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>enabled() example:</p>
+
+                                    <pre>_("<span class="hljs-number">field</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">enabled()</span>;<br />_("<span class="hljs-number">lookup</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">enabled()</span>;<br />_("<span class="hljs-number">optionset</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">enabled()</span>;</pre>
+
+                                    <p>or</p>
+
+                                    <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">enabled()</span>;<br />_("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">enabled()</span>;<br />_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">enabled()</span>;</pre>
+                                </div>
+                            </section>
+
+                            <br />
+                            <br />
+                            <h4 id="common-isEnable" class="lowercase">isEnable()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Get enable/disable status from control.</p>
+                            <section id="Section5" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase">enable/disable status.</span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>isEnable example:</p>
+                                   <pre>_("<span class="hljs-number">field</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">isEnable()</span>;<br />_("<span class="hljs-number">lookup</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">isEnable()</span>;<br />_("<span class="hljs-number">optionset</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">isEnable()</span>;</pre>
+
+                                    <p>or</p>
+
+                                    <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">isEnable()</span>;<br />_("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">isEnable()</span>;<br />_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">isEnable()</span>;</pre>
+                               </div>
+                            </section>
+
+                            <br />
+                            <br />
+                            <h4 id="common-required" class="lowercase">required()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Set control  required ,non-required or recommended.</p>
+                            <section id="Section6" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase">field required.</span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item bg-default"><strong>Parameters</strong></li>
+                                        <li class="list-group-item">
+                                            <dl class="dl-horizontal">
+                                                <dt>param</dt>
+                                                <dd>
+                                                    <code>bool</code>
+                                                    <span class="required">(required)</span>&nbsp;
+
+                                                <br />
+                                                    <br />
+                                                    <p>
+                                                        If you want set  required  ,  <strong>param</strong>  must be  <strong>"true"</strong>  ,
+                                                    <br />
+                                                        you want set non-required , <strong>param</strong> must be  <strong>"false"</strong> .
+                                                   
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+
+                                    <p>required() examples:</p>
+                                    <br />
+                                    <p>Set required.</p>
+                                   <pre>_("<span class="hljs-number">field</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">required(<span class="hljs-number">true</span>)</span>;<br />_("<span class="hljs-number">lookup</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">required(<span class="hljs-number">true</span>)</span>;<br />_("<span class="hljs-number">optionset</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">required(<span class="hljs-number">true</span>)</span>;</pre>
+
+
+
+                                    <p>Set non-required.</p>
+                                    <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">required(<span class="hljs-number">false</span>)</span>;<br />_("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">required(<span class="hljs-number">false</span>)</span>;<br />_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">required(<span class="hljs-number">false</span>)</span>;</pre>
+                                    </div>
+                            </section>
+
+
+
+                             <br />
+                            <br />
+                            <h4 id="common-label" class="lowercase">label()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Get or set control label(Standart,Lookup,Section,Tab,Iframe);</p>
+                            <section id="Section8" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase">field required.</span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item bg-default"><strong>Parameters</strong></li>
+                                        <li class="list-group-item">
+                                            <dl class="dl-horizontal">
+                                                <dt>param</dt>
+                                                <dd>
+                                                    <code>string</code>
+                                                    <span class="required">(optional)</span>&nbsp;
+
+                                                <br />
+                                                    <br />
+                                                    <p>
+                                                        If you want get  the label of control  ,  <strong>param</strong>  must be   not assigned value  ,
+                                                    <br />
+                                                        you want set the label of control , <strong>param</strong> must be  <strong>"text"</strong>  ,
+                                                  
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+
+                                    <p>label() examples:</p>
+                                     <br />
+                                      <p>Get label.</p>
+                                   <pre>var label = _("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">label(<span class="hljs-number"></span>)</span>;<br />var label = _("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">label(<span class="hljs-number"></span>)</span>;<br />var label = _("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">label(<span class="hljs-number"></span>)</span>;<br />var label = _("<span class="hljs-number">s</span>:<span class="hljs-value">section_name</span>").<span class="hljs-string">label(<span class="hljs-number"></span>)</span>;<br />var label = _("<span class="hljs-number">t</span>:<span class="hljs-value">tab_name</span>").<span class="hljs-string">label(<span class="hljs-number"></span>)</span>;<br />var label = _("<span class="hljs-number">i</span>:<span class="hljs-value">IFRAME_name</span>").<span class="hljs-string">label(<span class="hljs-number"></span>)</span>;</pre>
+
+                                    <br />
+                                     <p>Set label.</p>
+                                   <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">label(<span class="hljs-number">"test"</span>)</span>;<br />_("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">label(<span class="hljs-number">"test"</span>)</span>;<br />_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">label(<span class="hljs-number">"test"</span>)</span>;<br />_("<span class="hljs-number">s</span>:<span class="hljs-value">section_name</span>").<span class="hljs-string">label(<span class="hljs-number">"test"</span>)</span>;<br />_("<span class="hljs-number">t</span>:<span class="hljs-value">tab_name</span>").<span class="hljs-string">label(<span class="hljs-number">"test"</span>)</span>;<br />_("<span class="hljs-number">i</span>:<span class="hljs-value">IFRAME_name</span>").<span class="hljs-string">label(<span class="hljs-number">"test"</span>)</span>;</pre>
+
+                                   </div>
+                            </section>
+
+
+
+                            
+                            <br />
+                            <br />
+                            <h4 id="common-val" class="lowercase">val()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Get or set the control value.<br />
+                                Use of val methods are different for field controls(single line of text , multi line , date time) and lookup.
+                            </p>
+                            <section id="Section7" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase">get or set control value.</span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item bg-default"><strong>Parameters</strong></li>
+                                        <li class="list-group-item">
+                                            <dl class="dl-horizontal">
+                                                <dt>param</dt>
+                                                <dd>
+                                                     <code>string</code>  or <code>array</code>
+                                                    <span class="required">(optional)</span>&nbsp; If you want get value of control  , not assign value to parameter.
+
+                                                <br />
+                                                    <br />
+                                                    <p>
+                                                        for field   ,  parameter must be <strong>"string"</strong>  ,
+                                                    <br />
+                                                        for lookup ,  parameter must be <strong>"array"</strong>.Like this; <pre>{entityType:"Account" , name:"Foo" , id:"0000-0000"}</pre>
+                                                    
+                                                    </p>
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+
+                                    <p>val() examples:</p>
+                                    <br />
+                                    <p>get value of control</p>
+                                    <br />
+                                    
+                                    <ul>
+
+                                    <li>for field ;
+                                   <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">val()</span>;<br /></pre>
+
+                                        </li>
+                                        <li>
+                                    <p>for lookup ;<br />
+                                        &nbsp;&nbsp;&nbsp;val method of lookup returned three value.
+                                        <br />
+                                        <ul>
+                                            <li>entityName</li>
+                                            <li>name</li>
+                                            <li>id</li>
+                                        </ul>
+                                    </p>
+                                    
+                                    <pre>var lookupValue = _("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">val()</span>;<br /><br />var entitName = lookupValue.entityName;<br />var name = lookupValue.name;<br />var id =lookupValue.id;</pre>
+                                </li>
+                                    </ul>
+                                    
+                                    
+                                    
+                                      <p>set value of control</p>
+                                    <br />
+                                    
+                                    <ul>
+
+                                    <li>for field ;
+                                   <pre>_("<span class="hljs-number">f</span>:<span class="hljs-value">new_field</span>").<span class="hljs-string">val("Hello!")</span>;<br /></pre>
+
+                                        </li>
+                                        <li>
+                                    <p>for lookup ;
+                                       
+                                    </p>
+                                    
+                                    <pre> _("<span class="hljs-number">l</span>:<span class="hljs-value">new_lookup</span>").<span class="hljs-string">val(<span style="color:white">{<span style="color:#999">entityType</span>:"Contact" , <span style="color:#999">name</span>:"Foo" , <span style="color:#999">id</span>:"0000-0000"}</span>)</span>;</pre>
+                                </li>
+                                    </ul>    
+                                    
+                                    
+                                        
+                                
+                                </div>
+                            </section>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 id="optionset-methods">Custom Optionset Methods&nbsp;<a href="#optionset-methods"><i class="fa fa-link"></i></a></h3>
+                        </div>
+                        <div class="panel-body">
+                            
+                            <h4 id="optionset-labels" class="lowercase">labels()&nbsp;<a href="#tags-and-tagging-long-title-"><i class="fa fa-link"></i></a></h4>
+                             <p>Get option set labels as array.</p>
+                            <section id="tags-and-tagging-long-title--get" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: left">
+                                        <a href="#tags-and-tagging-long-title--get" class="btn btn-xs btn-info">method usage </a>
+
+                                    </div>
+                                    <div style="overflow: hidden"><br /></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>labels() example</p>
+                                
+                                     <pre>_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">labels()</span>;</pre>
+                               
+                                    <p>Return value</p>
+                                     <pre><span style="color:white"><br /><span style="color:#999"> [0]</span> :"label1" <br /> <span style="color:#999">[1] </span>:"label2"<br /> <span style="color:#999">[3] </span>:"label3"<br /></span></pre>
+
+                                </div>
+                            </section>
+
+                            <br /><br />
+                            <h4 id="optionset-values" class="lowercase">values()&nbsp;<a href="#tags-and-tagging-long-title-"><i class="fa fa-link"></i></a></h4>
+                             <p>Get option set values as array.</p>
+                            <section id="Section9" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: left">
+                                        <a href="#tags-and-tagging-long-title--get" class="btn btn-xs btn-info">method usage </a>
+
+                                    </div>
+                                    <div style="overflow: hidden"><br /></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>values() example</p>
+                                
+                                     <pre>_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">values()</span>;</pre>
+                               
+                                    <p>Return value</p>
+                                     <pre><span style="color:white"><br /><span style="color:#999"> [0]</span> :"value1" <br /> <span style="color:#999">[1] </span>:"value2"<br /> <span style="color:#999">[3] </span>:"value3"<br /></span></pre>
+
+                                </div>
+                            </section>
+
+
+                            <br /><br />
+                            <h4 id="optionset-selected" class="lowercase">selected()&nbsp;<a href="#tags-and-tagging-long-title-"><i class="fa fa-link"></i></a></h4>
+                             <p>Return selected option from option set as array. Like this : {text:"Foo",value:"1"}</p>
+                            <section id="Section10" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: left">
+                                        <a href="#tags-and-tagging-long-title--get" class="btn btn-xs btn-info">method usage </a>
+
+                                    </div>
+                                    <div style="overflow: hidden"><br /></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>selected() example</p>
+                                
+                                     <pre>var selectedOption = _("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">selected()</span>;</pre>
+                               
+                                    <p>Return value</p>
+                                     <pre><span style="color:white"><br /><span style="color:#999"> selectedOption</span>.text; <br /> <span style="color:#999">selectedOption</span>.value;</span></pre>
+
+                                </div>
+                            </section>
+
+                            <br /><br />
+                            <h4 id="optionset-options" class="lowercase">options()&nbsp;<a href="#tags-and-tagging-long-title-"><i class="fa fa-link"></i></a></h4>
+                             <p>Returns all options of optionset control as {text:"",value:""} array.</p>
+                            <section id="Section11" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: left">
+                                        <a href="#tags-and-tagging-long-title--get" class="btn btn-xs btn-info">method usage </a>
+
+                                    </div>
+                                    <div style="overflow: hidden"><br /></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>options() example</p>
+                                
+                                     <pre>_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">options()</span>;</pre>
+                               
+                                    <p>Return value</p>
+                                     <pre><span style="color:white"><br /><span style="color:#999"> [0]</span> :{text:"option1",value:1} <br /> <span style="color:#999">[1] </span>:{text:"option2",value:2}<br /> <span style="color:#999">[3] </span>:{text:"option3",value:3}
+                                         <br /></span></pre>
+
+                                </div>
+                            </section>
+
+
+                            <br />
+                            <br />
+                            <h4 id="optionset-addOption" class="lowercase">addOption()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Add option to optionset control.<br />
+                               
+                            </p>
+                            <section id="Section12" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase"></span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item bg-default"><strong>Parameters</strong></li>
+                                        <li class="list-group-item">
+                                            <dl class="dl-horizontal">
+                                                <dt>option</dt>
+                                                <dd>
+                                                      <code>array</code>
+                                                    <span class="required">(required)</span>&nbsp; New option value as array like this :<br /> {text:"New option",value:"10"}
+                                                    <br />
+                                                    <br />
+                                                    <dt>index</dt>
+                                                <dd>
+                                                      <code>int</code>
+                                                    <span class="required">(required)</span>&nbsp; Position of the new option.
+
+
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+
+                                    <p>addOption() examples:</p>
+                                   
+                                    <ul>
+                                        <li>
+
+                                             <pre>_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">addOption(<span style="color:white">{<span style="color:#999">text:</span>"New Option",<span style="color:#999">value:</span>"35"},1</span>)</span>;<br /></pre>
+                                         </li>
+                                    </ul>
+                                    
+                                    
+                                    </ul>    
+                                    
+                                    
+                                        
+                                
+                                </div>
+                            </section>
+
+                            <br />
+                            <br />
+                            <h4 id="optionset-removeOption" class="lowercase">removeOption()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Remove option from the optionset control.<br />
+                               
+                            </p>
+                            <section id="Section13" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase"></span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item bg-default"><strong>Parameters</strong></li>
+                                        <li class="list-group-item">
+                                            <dl class="dl-horizontal">
+                                                
+                                                    <dt>index</dt>
+                                                <dd>
+                                                      <code>int</code>
+                                                    <span class="required">(required)</span>&nbsp; option index.
+
+
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+
+                                    <p>removeOption() examples:</p>
+                                   
+                                    <ul>
+                                        <li>
+
+                                             <pre>_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">removeOption(<span style="color:white">1</span>);<br /></pre>
+                                         </li>
+                                    </ul>
+
+                                </div>
+                            </section>
+
+
+                            <br />
+                            <br />
+                            <h4 id="optionset-getOption" class="lowercase">getOption()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Return option from optionset control as array.like this {text:"Option",value:"12"}<br />
+                               
+                            </p>
+                            <section id="Section14" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase"></span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item bg-default"><strong>Parameters</strong></li>
+                                        <li class="list-group-item">
+                                            <dl class="dl-horizontal">
+                                                
+                                                    <dt>index</dt>
+                                                <dd>
+                                                      <code>int</code>
+                                                    <span class="required">(required)</span>&nbsp; option index.
+
+
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+
+                                    <p>getOption() examples:</p>
+                                   
+                                    <ul>
+                                        <li>
+
+                                             <pre>_("<span class="hljs-number">o</span>:<span class="hljs-value">new_optionset</span>").<span class="hljs-string">getOption(<span style="color:white">1</span>);<br /></pre>
+                                         </li>
+
+                                            <p>Returns value</p>
+                                            <pre>{text:"Option",value:"1"}</pre>
+                                       
+                                    </ul>
+
+                                </div>
+                            </section>
+
+
+
+
+
+
+
+                            
+                        </div>
+                    </div>
+                </div>
+            
+                
+                <div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 id="iframe-methods">Custom Iframe Methods&nbsp;<a href="#iframe-methods"><i class="fa fa-link"></i></a></h3>
+                        </div>
+                        <div class="panel-body">
+                            
+                            <h4 id="iframe-clear" class="lowercase">clear()&nbsp;<a href="#tags-and-tagging-long-title-"><i class="fa fa-link"></i></a></h4>
+                             <p>Set "about:blank" the iframe source .</p>
+                            <section id="Section15" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: left">
+                                        <a href="#tags-and-tagging-long-title--get" class="btn btn-xs btn-info">method usage </a>
+
+                                    </div>
+                                    <div style="overflow: hidden"><br /></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>clear() example</p>
+                                
+                                     <pre>_("<span class="hljs-number">i</span>:<span class="hljs-value">IFRAME_name</span>").<span class="hljs-string">clear()</span>;</pre>
+                               
+                                    
+                                </div>
+                            </section>
+
+                           
+                            <br />
+                            <br />
+                            <h4 id="iframe-url" class="lowercase">url()&nbsp;<a href="#users-user-list"><i class="fa fa-link"></i></a></h4>
+                            <p>Get or set iframe url.<br />
+                               
+                            </p>
+                            <section id="Section19" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: right"><span style="text-transform: lowercase"></span></div>
+                                    <div style="float: left"><a href="#users-user-list-get" class="btn btn-xs btn-info lowercase">method usage</a></div>
+                                    <div style="clear: both"></div>
+                                </div>
+                                <div class="panel-body">
+
+                                    <ul class="list-group">
+                                        <li class="list-group-item bg-default"><strong>Parameters</strong></li>
+                                        <li class="list-group-item">
+                                            <dl class="dl-horizontal">
+                                                <dt>url</dt>
+                                                <dd>
+                                                      <code>string</code>
+                                                    <span class="required">(optional)</span>&nbsp; Iframe url.If you want get selected iframe url  not assign value to paramter.
+                                                    <br />
+                                                    <br />
+                                                   
+                                            </dl>
+                                        </li>
+                                    </ul>
+
+                                    <p>url() examples:</p>
+                                   
+                                    <ul>
+                                        <li>
+
+                                             <pre>_("<span class="hljs-number">i</span>:<span class="hljs-value">IFRAME_name</span>").<span class="hljs-string">url(<span style="color:white">"http://testUrl"</span>)</span>;<br /></pre>
+                                         </li>
+                                    </ul>
+                                    
+                                    
+                                      
+                                    
+                                    
+                                        
+                                
+                                </div>
+                            </section>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                 <div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 id="tab-methods">Custom Tab Methods&nbsp;<a href="#tab-methods"><i class="fa fa-link"></i></a></h3>
+                        </div>
+                        <div class="panel-body">
+                            
+                            <h4 id="tab-expand" class="lowercase">expand()&nbsp;<a href="#tags-and-tagging-long-title-"><i class="fa fa-link"></i></a></h4>
+                             <p>Expand the selected tab on MS CRM form.</p>
+                            <section id="Section16" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: left">
+                                        <a href="#tags-and-tagging-long-title--get" class="btn btn-xs btn-info">method usage </a>
+
+                                    </div>
+                                    <div style="overflow: hidden"><br /></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>expand() example</p>
+                                
+                                     <pre>_("<span class="hljs-number">t</span>:<span class="hljs-value">tab_name</span>").<span class="hljs-string">expand()</span>;</pre>
+                               
+                                    
+                                </div>
+                            </section>
+
+                           <br />
+                            <br />
+                         
+                       <h4 id="tab-collapse" class="lowercase">collapse()&nbsp;<a href="#tags-and-tagging-long-title-"><i class="fa fa-link"></i></a></h4>
+                             <p>collapse the selected tab on MS CRM form.</p>
+                            <section id="Section17" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: left">
+                                        <a href="#tags-and-tagging-long-title--get" class="btn btn-xs btn-info">method usage </a>
+
+                                    </div>
+                                    <div style="overflow: hidden"><br /></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>collapse() example</p>
+                                
+                                     <pre>_("<span class="hljs-number">t</span>:<span class="hljs-value">tab_name</span>").<span class="hljs-string">collapse()</span>;</pre>
+                               
+                                    
+                                </div>
+                            </section>
+
+
+                            
+                           <br />
+                            <br />
+                         
+                       <h4 id="tab-sections" class="lowercase">sections()&nbsp;<a href="#tags-and-tagging-long-title-"><i class="fa fa-link"></i></a></h4>
+                             <p>Get sections of selected tab.</p>
+                            <section id="Section18" class="panel panel-info">
+                                <div class="panel-heading">
+                                    <div style="float: left">
+                                        <a href="#tags-and-tagging-long-title--get" class="btn btn-xs btn-info">method usage </a>
+
+                                    </div>
+                                    <div style="overflow: hidden"><br /></div>
+                                </div>
+                                <div class="panel-body">
+                                    <p>sections() example</p>
+                                
+                                     <pre>_("<span class="hljs-number">t</span>:<span class="hljs-value">tab_name</span>").<span class="hljs-string">sections()</span>;</pre>
+                               
+                                    
+                                </div>
+                            </section>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+</body>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="../bin/jquery.slimscroll.min.js"></script>
+
+<script>
+    (function () {
+        $('table').addClass('table');
+
+        var slimScrollHeight = $(window).height() * 85 / 100;
+        slimScrollHeight += "px";
+
+        $('#nav ').slimScroll({
+            height: slimScrollHeight,
+            color: 'white',
+            visible:false,
+            railVisible: false,
+            railColor: '#EEE',
+            railOpacity: 0.3,
+            wheelStep: 2,
+            margin: 0,
+            padding:0
+        });
+
+    }).call(this);
+</script>
+</html>
