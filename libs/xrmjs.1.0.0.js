@@ -100,7 +100,7 @@
 
         required: function (bool) {
             if (bool == true) {
-                return
+                return this.xControl.getAttribute().setRequiredLevel("required");
             } else if (bool == false) {
                 return this.xControl.getAttribute().setRequiredLevel("none");
             } else if (bool == null || bool == "") {
