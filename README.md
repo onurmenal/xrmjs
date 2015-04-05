@@ -5,4 +5,4 @@ The methods and selectors are very similar to jQuery and use fully supported met
 
 This library also includes an intellisense file to provide intellisense support on Visual Studio .
 
-documentation : http://crm2015.veripark.com/xrmJS/
+
