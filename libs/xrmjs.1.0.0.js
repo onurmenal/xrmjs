@@ -46,7 +46,7 @@
     }
 
     _.clientUrl = function () {
-        return _context.getClientUrl();
+        return _.context.getClientUrl();
     }
 
     _.serverUrl = function () {
