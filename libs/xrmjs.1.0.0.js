@@ -81,11 +81,27 @@
             return this.xControl.setVisible(bool);
         },
 
+        /*
+         * This method is obsolete, the method name should be "disable", not "disabled". 
+         * However, this method was not removed for legacy reasons.
+         */
         disabled: function () {
             return this.xControl.setDisabled(true);
         },
 
+        /*
+         * This method is obsolete, the method name should be "disable", not "disabled". 
+         * However, this method was not removed for legacy reasons.
+         */
         enabled: function () {
+            return this.xControl.setDisabled(false);
+        },
+
+        disable: function () {
+            return this.xControl.setDisabled(true);
+        },
+
+        enable: function () {
             return this.xControl.setDisabled(false);
         },
 
@@ -110,6 +126,18 @@
             }
         },
 
+        isRequired: function () {
+            return this.xControl.getRequiredLevel() == "required";
+        },
+
+        recommend: function () {
+            this.xControl.setRequiredLevel("recommended");
+        },
+
+        isRecommended: function() {
+            return this.xControl.getRequiredLevel() == "recommended";
+        },
+
         label: function (text) {
             if (text) {
                 return this.xControl.setLabel(text);
@@ -130,11 +158,21 @@
 
         library.prototype.enabled = common.enabled;
 
+        library.prototype.disable = common.disable;
+
+        library.prototype.enable = common.enable;
+
         library.prototype.setDisabled = common.setDisabled;
 
         library.prototype.isEnable = common.isEnable;
 
         library.prototype.required = common.required;
+
+        library.prototype.isRequired = common.isRequired;
+
+        library.prototype.recommend = common.recommend;
+
+        library.prototype.isRecommended = common.isRecommended;
 
         library.prototype.label = common.label;
     }
