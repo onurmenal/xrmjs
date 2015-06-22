@@ -171,6 +171,21 @@
                  }
              },
 
+             isRequired: function () {
+                 /// <summary>Returns true if the field is required.</summary>
+                 return this.xControl.getRequiredLevel() == "required";
+             },
+
+             recommend: function () {
+                 /// <summary>Sets the field's required level to "recommended".</summary>
+                 this.xControl.setRequiredLevel("recommended");
+             },
+
+             isRecommended: function () {
+                 /// <summary>Returns true if the field is recommended.</summary>
+                 return this.xControl.getRequiredLevel() == "recommended";
+             },
+
              label: function (text) {
                  /// <summary>Get or set  form object label .</summary>
                  /// <param name="text" type="string" optional="true">Optional.If you want change label ,  assing value .</param>
@@ -198,6 +213,12 @@
              library.prototype.setDisabled = common.setDisabled;
 
              library.prototype.isEnable = common.isEnable;
+
+             library.prototype.isRequired = common.isRequired;
+
+             library.prototype.recommend = common.recommend;
+
+             library.prototype.isRecommended = common.isRecommended;
 
              library.prototype.required = common.required;
 
