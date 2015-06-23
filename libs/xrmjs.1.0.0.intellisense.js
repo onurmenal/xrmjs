@@ -48,10 +48,16 @@
              return Xrm.Page.ui.getFormType();
          }
 
-         _.userId = function () {
-             ///<summary>Returns logged user id.</summary>
-             return _.context.getUserId();
-         }
+		_.userId = function (withBraces) {
+			if(withBraces){
+				if(withBraces==true)
+				return _.context.getUserId();
+				else
+				return _.context.getUserId().replace(/[\{\}]/g, '');
+				}else{
+				return _.context.getUserId();
+			}
+		}
 
          _.clientUrl = function () {
 

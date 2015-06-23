@@ -33,17 +33,32 @@
         return Xrm.Page.data.entity.getEntityName();
     }
 
-    _.recordId = function () {
-        return Xrm.Page.data.entity.getId();
-    }
+	_.recordId = function (withBraces) {
+		if(withBraces){
+			if(withBraces == true)
+			return Xrm.Page.data.entity.getId();
+			else
+			return Xrm.Page.data.entity.getId().replace(/[\{\}]/g, '');
+		}
+		else{
+			return Xrm.Page.data.entity.getId();
+		}
+	}
 
     _.formType = function () {
         return Xrm.Page.ui.getFormType();
     }
 
-    _.userId = function () {
-        return _.context.getUserId();
-    }
+	_.userId = function (withBraces) {
+		if(withBraces){
+			if(withBraces==true)
+			return _.context.getUserId();
+			else
+			return _.context.getUserId().replace(/[\{\}]/g, '');
+			}else{
+			return _.context.getUserId();
+		}
+	}
 
     _.clientUrl = function () {
         return _.context.getClientUrl();
