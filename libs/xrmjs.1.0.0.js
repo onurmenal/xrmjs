@@ -1,23 +1,30 @@
 (function () {
     // xrmJS
     var _ = function (selector) {
-        var selectors = selector.split(":");
 
-        this.type = selectors[0];
-        this.object = selectors[1];
+        if (selector==="*") {
+          this.type=null;
+          this.object = null;
+          return new _form();
+        }else {
+          var selectors = selector.split(":");
 
-        if (this.type == "field" || this.type == "f") {
-            return new _field(this.object);
-        } else if (this.type == "lookup" || this.type == "l") {
-            return new _lookup(this.object);
-        } else if (this.type == "optionset" || this.type == "o") {
-            return new _optionset(this.object);
-        } else if (this.type == "iframe" || this.type == "i") {
-            return new _iframe(this.object);
-        } else if (this.type == "section" || this.type == "s") {
-            return new _section(this.object);
-        } else if (this.type == "t" || this.type == "tab") {
-            return new _tab(this.object);
+          this.type = selectors[0];
+          this.object = selectors[1];
+
+          if (this.type == "field" || this.type == "f") {
+              return new _field(this.object);
+          } else if (this.type == "lookup" || this.type == "l") {
+              return new _lookup(this.object);
+          } else if (this.type == "optionset" || this.type == "o") {
+              return new _optionset(this.object);
+          } else if (this.type == "iframe" || this.type == "i") {
+              return new _iframe(this.object);
+          } else if (this.type == "section" || this.type == "s") {
+              return new _section(this.object);
+          } else if (this.type == "t" || this.type == "tab") {
+              return new _tab(this.object);
+          }
         }
     };
 
@@ -49,6 +56,10 @@
         return Xrm.Page.ui.getFormType();
     }
 
+    _.formControls = function(){
+      return Xrm.Page.ui.controls;
+    }
+
 	_.userId = function (withBraces) {
 		if(withBraces){
 			if(withBraces==true)
@@ -77,6 +88,7 @@
 
     /*#Constants*/
 
+
     /*Common Methods*/
 
     var common = {
@@ -97,7 +109,7 @@
         },
 
         /*
-         * This method is obsolete, the method name should be "disable", not "disabled". 
+         * This method is obsolete, the method name should be "disable", not "disabled".
          * However, this method was not removed for legacy reasons.
          */
         disabled: function () {
@@ -105,7 +117,7 @@
         },
 
         /*
-         * This method is obsolete, the method name should be "disable", not "disabled". 
+         * This method is obsolete, the method name should be "disable", not "disabled".
          * However, this method was not removed for legacy reasons.
          */
         enabled: function () {
@@ -193,6 +205,33 @@
     }
 
     /*#Common Methods*/
+
+
+    /*Extend Form Library*/
+
+    var _form = function(){
+      this.xControl = null;
+      return this;
+    }
+
+    _form.prototype.disable = function(){
+      _.formControls().forEach(
+       function (formControl) {
+           if (formControl.getParent() != null && formControl.getParent().getParent() != null && formControl.getControlType() != "subgrid")
+               formControl.setDisabled(true);
+       });
+    }
+
+    _form.prototype.enable = function(){
+      _.formControls().forEach(
+       function (formControl) {
+           if (formControl.getParent() != null && formControl.getParent().getParent() != null && formControl.getControlType() != "subgrid")
+               formControl.setDisabled(false);
+       });
+    }
+
+    /*#Extend Form Library*/
+
 
     /* Extend field(single line ,multiple line , number ,  datetime) library */
 
