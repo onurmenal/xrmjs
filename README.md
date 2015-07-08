@@ -7,7 +7,7 @@ This library also includes an intellisense file to provide intellisense support 
 
 
 #A few examples
-* Hide text control `_("f:new_fieldname").hide` or `_("field:fieldname").hide()`
+* Hide text control `_("f:new_fieldname").hide()` or `_("field:fieldname").hide()`
 * Get text control value `_("f:new_fieldname").val()` or set  value `_("f:new_fieldname").val("hi!")`
 * Hide lookup control  `_("l:new_lookup").hide()` or `_("lookup:new_lookup").hide()`
 * Set lookup value `_("l:new_lookup").val({entityType:"Account", name:"John Doe", id:"0000-0000"})`
